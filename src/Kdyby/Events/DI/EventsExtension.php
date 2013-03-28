@@ -13,7 +13,7 @@ namespace Kdyby\Events\DI;
 use Doctrine\Common\EventSubscriber;
 use Kdyby;
 use Nette;
-use Nette\PhpGenerator\PhpLiteral;
+use Nette\Utils\PhpGenerator\PhpLiteral;
 
 
 
@@ -56,8 +56,8 @@ class EventsExtension extends Nette\Config\CompilerExtension
 		$config = $this->getConfig($this->defaults);
 
 		$builder->addDefinition($this->prefix('manager'))
-			->setClass('Kdyby\Events\EventManager')
-			->setInject(FALSE);
+			->setClass('Kdyby\Events\EventManager')/**/;
+			/*->setInject(FALSE);*/
 
 		Nette\Utils\Validators::assertField($config, 'subscribers', 'array');
 		foreach ($config['subscribers'] as $subscriber) {
@@ -145,7 +145,7 @@ class EventsExtension extends Nette\Config\CompilerExtension
 			}
 
 			$eventNames = array();
-			$listenerInst = Nette\PhpGenerator\Helpers::createObject($def->class, array());
+			$listenerInst = Nette\Utils\PhpGenerator\Helpers::createObject($def->class, array());
 			/** @var EventSubscriber $listenerInst */
 			foreach ($listenerInst->getSubscribedEvents() as $eventName) {
 				list(, $method) = Kdyby\Events\Event::parseName($eventName);
